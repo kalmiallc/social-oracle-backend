@@ -1,0 +1,74 @@
+service: social-oracle-api-${opt:stage, 'dev'}
+frameworkVersion: '3'
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+        - '@aws-sdk/client-lambda'
+        - '@aws-sdk/client-s3'
+        - '@aws-sdk/client-secrets-manager'
+        - '@aws-sdk/client-sqs'
+        - '@aws-sdk/s3-request-presigner'
+    packagerOptions:
+      lockFile: './package-lock.json'
+    excludeFiles: '**/*\.test\.js|**/*\.test\.ts|**/tests/**/*|**/test/**/|**/*\.spec\.ts|**/*\.spec\.js'
+
+plugins:
+  - serverless-webpack
+  - serverless-plugin-resource-tagging
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  iam:
+    role: arn:aws:iam::108782093333:role/serverless-workers-executor
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+  stackTags:
+    project: 'social-oracle'
+    env: '${self:provider.stage}'
+
+  # you can define service wide environment variables here
+  environment: ${file(./bin/deploy/env/env.yml)}
+
+# you can add packaging information here
+package:
+  patterns:
+    - '!dist/**'
+  excludeDevDependencies: true
+
+functions:
+  social-oracle-api:
+    handler: ./src/lambda.handler
+    name: 'social-oracle-api-${self:provider.stage}'
+    description: API for Social Oracle.
+    memorySize: 512
+    timeout: 30
+    events:
+      - http: # this is an API Gateway HTTP event trigger
+          path: /
+          method: ANY
+          cors: true
+      - http: # all routes get proxied to the Express router
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+  social-oracle-worker:
+    handler: ./src/workers/worker-executor.handler
+    name: 'social-oracle-worker-${self:provider.stage}'
+    description: Serverless worker executor for scheduled tasks.
+    memorySize: 512
+    timeout: 900
+    events:
+      - schedule: cron(${env:CRON_SCHEDULE, '0/1 * * * ? *'})
+      - sqs:
+          arn: ${env:WORKER_SQS_ARN}
+          batchSize: 4
+          maximumBatchingWindow: 5
+          functionResponseType: ReportBatchItemFailures

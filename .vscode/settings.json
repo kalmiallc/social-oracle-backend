@@ -1,0 +1,24 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.maxTokenizationLineLength": 1000000000,
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "cSpell.words": [
+    "coston",
+    "CURDATE",
+    "flarenetwork",
+    "FPMM",
+    "FPMMF",
+    "funder",
+    "hexlify",
+    "leaderboard",
+    "psds",
+    "slsw",
+    "SUBDATE"
+  ]
+}
