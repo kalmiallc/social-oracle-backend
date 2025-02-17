@@ -63,6 +63,18 @@ export class Outcome extends AdvancedSQLModel {
   })
   name: string;
 
+  /**
+   * Img URL.
+   */
+  @prop({
+    parser: {
+      resolver: stringParser()
+    },
+    serializable: [SerializeFor.USER, SerializeFor.SELECT_DB, SerializeFor.UPDATE_DB, SerializeFor.INSERT_DB],
+    populatable: [PopulateFrom.DB, PopulateFrom.USER]
+  })
+  imgUrl: string;
+
   @prop({
     parser: { resolver: OutcomeChance },
     serializable: [SerializeFor.USER],

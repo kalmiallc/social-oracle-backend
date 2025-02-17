@@ -21,15 +21,19 @@ const data = {
   resolutionType: ResolutionType.MANUAL,
   consensusThreshold: 60,
   tags: 'github',
+  imgUrl: '',
   predictionOutcomes: [
     {
-      name: 'Yes'
+      name: 'Yes',
+      imgUrl: ''
     },
     {
-      name: 'No'
+      name: 'No',
+      imgUrl: ''
     },
     {
-      name: 'Maybe'
+      name: 'Maybe',
+      imgUrl: ''
     }
   ]
 };
