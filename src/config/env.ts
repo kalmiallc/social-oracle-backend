@@ -59,6 +59,7 @@ export interface IEnv {
   SLACK_WEBHOOK_URL: string;
 
   ORACLE_CONTRACT: string;
+  TREASURY_ADDRESS: string;
   JSON_VERIFIER_CONTRACT: string;
   COLLATERAL_TOKEN_CONTRACT: string;
   CONDITIONAL_TOKEN_CONTRACT: string;
@@ -79,6 +80,9 @@ export interface IEnv {
   FLARE_CONTRACT_REGISTRY_ADDRESS: string;
   FLARE_ATTESTATION_PROVIDER_URL: string;
   FLARE_ATTESTATION_PROVIDER_API_KEY: string;
+
+  ORACLE_FEE_FACTOR: string;
+  ORACLE_TREASURY_PERCENT: number;
 
   GITHUB_AUTH: string;
 }
@@ -159,6 +163,7 @@ export let env: IEnv = {
   CONDITIONAL_TOKEN_CONTRACT: process.env['CONDITIONAL_TOKEN_CONTRACT'],
   FPMM_FACTORY_CONTRACT: process.env['FPMM_FACTORY_CONTRACT'],
   ORACLE_CONTRACT: process.env['ORACLE_CONTRACT'],
+  TREASURY_ADDRESS: process.env['TREASURY_ADDRESS'],
   JSON_VERIFIER_CONTRACT: process.env['JSON_VERIFIER_CONTRACT'],
 
   RPC_URL: process.env['RPC_URL'],
@@ -176,6 +181,9 @@ export let env: IEnv = {
   FPMM_BLOCK_CONFIRMATIONS: parseInt(process.env['FPMM_BLOCK_CONFIRMATIONS']) || 5,
   FPMM_FACTORY_BLOCK_CONFIRMATIONS: parseInt(process.env['FPMM_FACTORY_BLOCK_CONFIRMATIONS']) || 5,
   ORACLE_BLOCK_CONFIRMATIONS: parseInt(process.env['ORACLE_BLOCK_CONFIRMATIONS']) || 5,
+
+  ORACLE_FEE_FACTOR: process.env['ORACLE_FEE_FACTOR'] || '0.003', // Oracle fee factor in ETH (18 decimals) - 0.003 -> 0.3%
+  ORACLE_TREASURY_PERCENT: parseInt(process.env['ORACLE_TREASURY_PERCENT']) || 100, // 100 -> 1% (6 decimals)
 
   GITHUB_AUTH: process.env['GITHUB_AUTH']
 };
