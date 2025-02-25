@@ -79,6 +79,8 @@ export interface IEnv {
   FLARE_CONTRACT_REGISTRY_ADDRESS: string;
   FLARE_ATTESTATION_PROVIDER_URL: string;
   FLARE_ATTESTATION_PROVIDER_API_KEY: string;
+
+  GITHUB_AUTH: string;
 }
 
 dotenv.config();
@@ -173,7 +175,9 @@ export let env: IEnv = {
 
   FPMM_BLOCK_CONFIRMATIONS: parseInt(process.env['FPMM_BLOCK_CONFIRMATIONS']) || 5,
   FPMM_FACTORY_BLOCK_CONFIRMATIONS: parseInt(process.env['FPMM_FACTORY_BLOCK_CONFIRMATIONS']) || 5,
-  ORACLE_BLOCK_CONFIRMATIONS: parseInt(process.env['ORACLE_BLOCK_CONFIRMATIONS']) || 5
+  ORACLE_BLOCK_CONFIRMATIONS: parseInt(process.env['ORACLE_BLOCK_CONFIRMATIONS']) || 5,
+
+  GITHUB_AUTH: process.env['GITHUB_AUTH']
 };
 
 /**

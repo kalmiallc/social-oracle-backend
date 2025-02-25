@@ -6,6 +6,7 @@ import { AdvancedSQLModel } from '../../../lib/base-models/advanced-sql.model';
 import { generateJwtToken } from '../../../lib/utils';
 import { Role } from './role.model';
 import { emailValidator } from '@rawmodel/validators';
+import { FeeContributionsTiers } from '../../../lib/github';
 
 export enum UserEmailStatus {
   PENDING = 0,
@@ -73,6 +74,72 @@ export class User extends AdvancedSQLModel {
   walletAddress: string;
 
   /**
+   * User's github ID.
+   */
+  @prop({
+    parser: {
+      resolver: integerParser()
+    },
+    serializable: [SerializeFor.USER, SerializeFor.SELECT_DB, SerializeFor.INSERT_DB, SerializeFor.UPDATE_DB],
+    populatable: [PopulateFrom.DB]
+  })
+  githubId: number;
+
+  /**
+   * User's github username.
+   */
+  @prop({
+    parser: {
+      resolver: stringParser()
+    },
+    serializable: [SerializeFor.USER, SerializeFor.SELECT_DB, SerializeFor.INSERT_DB, SerializeFor.UPDATE_DB],
+    populatable: [PopulateFrom.DB]
+  })
+  githubUsername: string;
+
+  /**
+   * User's github follower count.
+   */
+  @prop({
+    parser: {
+      resolver: integerParser()
+    },
+    serializable: [SerializeFor.USER, SerializeFor.SELECT_DB, SerializeFor.INSERT_DB, SerializeFor.UPDATE_DB],
+    populatable: [PopulateFrom.DB],
+    defaultValue: 0,
+    emptyValue: 0
+  })
+  githubFollowers: number;
+
+  /**
+   * User's github contribution count.
+   */
+  @prop({
+    parser: {
+      resolver: integerParser()
+    },
+    serializable: [SerializeFor.USER, SerializeFor.SELECT_DB, SerializeFor.INSERT_DB, SerializeFor.UPDATE_DB],
+    populatable: [PopulateFrom.DB],
+    defaultValue: 0,
+    emptyValue: 0
+  })
+  githubContributions: number;
+
+  /**
+   * User's github tier
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    serializable: [SerializeFor.USER],
+    validators: [],
+    getter(v) {
+      const total = this?.githubFollowers + this?.githubContributions;
+      return FeeContributionsTiers.reduce((acc, curr, curI) => (total >= curr.contribution ? curI : acc), 0);
+    }
+  })
+  public githubTier: string;
+
+  /**
    * User's authentication token.
    */
   @prop({
@@ -107,6 +174,32 @@ export class User extends AdvancedSQLModel {
     `,
       {
         address
+      },
+      conn
+    );
+
+    if (data && data.length) {
+      this.populate(data[0], PopulateFrom.DB);
+    }
+
+    return this;
+  }
+
+  /**
+   * Populates user by github id.
+   * @param id Github ID.
+   * @returns Populated user.
+   */
+  async populateByGithubId(id: number, conn?: PoolConnection): Promise<User> {
+    this.reset();
+
+    const data = await this.db().paramExecute(
+      `
+      SELECT * FROM ${DbTables.USER} 
+      WHERE githubId = @id
+    `,
+      {
+        id
       },
       conn
     );

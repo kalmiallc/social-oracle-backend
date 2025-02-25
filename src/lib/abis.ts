@@ -1043,6 +1043,43 @@ export const ORACLE_ABI = [
     'outputs': [],
     'stateMutability': 'nonpayable',
     'type': 'function'
+  },
+  {
+    'inputs': [
+      {
+        'internalType': 'address',
+        'name': '',
+        'type': 'address'
+      }
+    ],
+    'name': 'userFee',
+    'outputs': [
+      {
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+      }
+    ],
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
+    'inputs': [
+      {
+        'internalType': 'address[]',
+        'name': 'users',
+        'type': 'address[]'
+      },
+      {
+        'internalType': 'uint256[]',
+        'name': 'fees',
+        'type': 'uint256[]'
+      }
+    ],
+    'name': 'setUserFee',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
   }
 ];
 

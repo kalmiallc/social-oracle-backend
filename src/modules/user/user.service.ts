@@ -7,6 +7,9 @@ import { User, UserEmailStatus } from './models/user.model';
 import { WalletLoginDto } from './dtos/wallet-login.dto';
 import { UserProfileDto } from './dtos/user-profile.dto';
 import { UserEmailDto } from './dtos/user-email.dto';
+import { GithubLinkDto } from './dtos/github-link.dto';
+import { FeeContributionsTiers, getGithubStats } from '../../lib/github';
+import { setUserFee } from '../../lib/blockchain';
 
 @Injectable()
 export class UserService {
@@ -92,6 +95,57 @@ export class UserService {
 
     user.login();
     return user.serialize(SerializeFor.USER);
+  }
+
+  /**
+   * Link user with github.
+   * @param data Github data.
+   * @param context Application context.
+   * @returns User data.
+   */
+  public async linkGithub(data: GithubLinkDto, context: Context) {
+    const user = context.user;
+
+    if (user.githubId === data.id && user.githubUsername === data.username) {
+      return user?.serialize(SerializeFor.USER);
+    }
+
+    const githubUser = await new User({}, context).populateByGithubId(data.id);
+
+    if (githubUser.exists() && githubUser.id === user.id) {
+      throw new CodeException({
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+        code: ValidatorErrorCode.GITHUB_ALREADY_LINKEND_TO_AN_ACCOUNT,
+        errorCodes: ValidatorErrorCode,
+        errorMessage: `GitHub already linked to another account.`,
+        sourceFunction: `${this.constructor.name}/linkGithub`,
+        context
+      });
+    }
+
+    const stats = await getGithubStats(data.username);
+
+    user.githubUsername = data.username;
+    user.githubId = data.id;
+    user.githubFollowers = stats.followers;
+    user.githubContributions = stats.contributions;
+
+    const fee = FeeContributionsTiers[user.githubTier || 0]?.fee;
+
+    await setUserFee(user.walletAddress, fee);
+
+    try {
+      await user.validate();
+    } catch (error) {
+      await user.handle(error);
+
+      if (!user.isValid()) {
+        throw new ValidationException(error, ValidatorErrorCode);
+      }
+    }
+    await user.update();
+
+    return user?.serialize(SerializeFor.USER);
   }
 
   public async updateProfile(data: UserProfileDto, context: Context) {
