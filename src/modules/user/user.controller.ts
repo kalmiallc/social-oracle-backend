@@ -8,6 +8,7 @@ import { WalletLoginDto } from './dtos/wallet-login.dto';
 import { ValidationGuard } from '../../guards/validation.guard';
 import { UserProfileDto } from './dtos/user-profile.dto';
 import { UserEmailDto } from './dtos/user-email.dto';
+import { GithubLinkDto } from './dtos/github-link.dto';
 
 @Controller('users')
 export class UserController {
@@ -29,6 +30,13 @@ export class UserController {
   @UseGuards(ValidationGuard)
   async loginWithWallet(@Body() data: WalletLoginDto, @Ctx() context: Context) {
     return await this.userService.loginWithWallet(data, context);
+  }
+
+  @Put('github-link')
+  @Validation({ dto: GithubLinkDto })
+  @UseGuards(ValidationGuard)
+  async linkGithub(@Body() data: GithubLinkDto, @Ctx() context: Context) {
+    return await this.userService.linkGithub(data, context);
   }
 
   @Put('update-profile')

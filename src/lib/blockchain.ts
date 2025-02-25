@@ -201,6 +201,32 @@ export async function verifyPredictionSetResults(proof: any): Promise<boolean> {
 }
 
 /**
+ * Verifies prediction set results.
+ * @param proof Results proof data.
+ * @returns Boolean.
+ */
+export async function setUserFee(address: string, fee: number): Promise<boolean> {
+  const { oracleContract } = setup();
+
+  const feeFactor = ethers.parseEther(fee.toString());
+  try {
+    const finalizeTx = await oracleContract.setUserFee([address], [feeFactor]);
+    await finalizeTx.wait();
+  } catch (error) {
+    throw new CodeException({
+      code: SystemErrorCode.BLOCKCHAIN_SYSTEM_ERROR,
+      errorCodes: SystemErrorCode,
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      sourceFunction: `${this.constructor.name}/verifyPredictionSetResults`,
+      errorMessage: 'Error while verifying prediction set results.',
+      details: error
+    });
+  }
+
+  return await oracleContract.userFee(address);
+}
+
+/**
  * Formats given number to bytes 32 string.
  * @param num Number.
  * @returns Bytes 32 string.
