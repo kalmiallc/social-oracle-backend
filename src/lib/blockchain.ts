@@ -26,24 +26,31 @@ export enum PredictionSetBcStatus {
  * @returns conditionalTokenContract - Conditional token contract.
  */
 export function setup(fpmmAddress: string = null) {
-  const provider = new ethers.JsonRpcProvider(env.RPC_URL);
-  const signer = new ethers.Wallet(env.SIGNER_PRIVATE_KEY, provider);
+  try {
+    const provider = new ethers.JsonRpcProvider(env.RPC_URL);
+    const signer = new ethers.Wallet(env.SIGNER_PRIVATE_KEY, provider);
 
-  const oracleContract = new ethers.Contract(env.ORACLE_CONTRACT, ORACLE_ABI, signer);
-  const fpmmfContract = new ethers.Contract(env.FPMM_FACTORY_CONTRACT, FPMM_FACTORY_ABI, signer);
-  const conditionalTokenContract = new ethers.Contract(env.CONDITIONAL_TOKEN_CONTRACT, CONDITIONAL_TOKEN_ABI, signer);
-  const fpmmContract = fpmmAddress ? new ethers.Contract(fpmmAddress, FPMM_ABI, signer) : null;
-  const verifierContract = new ethers.Contract(env.JSON_VERIFIER_CONTRACT, JSON_VERIFIER_ABI, signer);
+    const oracleContract = new ethers.Contract(env.ORACLE_CONTRACT, ORACLE_ABI, signer);
+    const fpmmfContract = new ethers.Contract(env.FPMM_FACTORY_CONTRACT, FPMM_FACTORY_ABI, signer);
+    const conditionalTokenContract = new ethers.Contract(env.CONDITIONAL_TOKEN_CONTRACT, CONDITIONAL_TOKEN_ABI, signer);
+    const fpmmContract = fpmmAddress ? new ethers.Contract(fpmmAddress, FPMM_ABI, signer) : null;
+    const verifierContract = new ethers.Contract(env.JSON_VERIFIER_CONTRACT, JSON_VERIFIER_ABI, signer);
 
-  return {
-    provider,
-    signer,
-    oracleContract,
-    fpmmfContract,
-    conditionalTokenContract,
-    fpmmContract,
-    verifierContract
-  };
+    return {
+      provider,
+      signer,
+      oracleContract,
+      fpmmfContract,
+      conditionalTokenContract,
+      fpmmContract,
+      verifierContract
+    };
+  } catch (error) {
+    console.log('Error while init: ');
+    console.log(error);
+
+    throw error;
+  }
 }
 
 /**

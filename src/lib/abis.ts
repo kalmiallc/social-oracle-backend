@@ -12,6 +12,15 @@ export const FPMM_ABI = [
     'type': 'function'
   },
   {
+    'constant': true,
+    'inputs': [],
+    'name': 'treasuryPercent',
+    'outputs': [{ 'name': '', 'type': 'uint256' }],
+    'payable': false,
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
     'constant': false,
     'inputs': [
       { 'name': 'spender', 'type': 'address' },
@@ -21,6 +30,28 @@ export const FPMM_ABI = [
     'outputs': [{ 'name': '', 'type': 'bool' }],
     'payable': false,
     'stateMutability': 'nonpayable',
+    'type': 'function'
+  },
+  {
+    'constant': true,
+    'inputs': [{ 'name': 'user', 'type': 'address' }],
+    'name': 'getTradingFee',
+    'outputs': [{ 'name': '', 'type': 'uint256' }],
+    'payable': false,
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
+    'constant': true,
+    'inputs': [
+      { 'name': 'investmentAmount', 'type': 'uint256' },
+      { 'name': 'outcomeIndex', 'type': 'uint256' },
+      { 'name': 'user', 'type': 'address' }
+    ],
+    'name': 'calcBuyAmount',
+    'outputs': [{ 'name': '', 'type': 'uint256' }],
+    'payable': false,
+    'stateMutability': 'view',
     'type': 'function'
   },
   {
@@ -64,6 +95,15 @@ export const FPMM_ABI = [
     'type': 'function'
   },
   {
+    'constant': true,
+    'inputs': [],
+    'name': 'percentUL',
+    'outputs': [{ 'name': '', 'type': 'uint256' }],
+    'payable': false,
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
     'constant': false,
     'inputs': [
       { 'name': 'spender', 'type': 'address' },
@@ -92,7 +132,8 @@ export const FPMM_ABI = [
     'constant': true,
     'inputs': [
       { 'name': 'returnAmount', 'type': 'uint256' },
-      { 'name': 'outcomeIndex', 'type': 'uint256' }
+      { 'name': 'outcomeIndex', 'type': 'uint256' },
+      { 'name': 'user', 'type': 'address' }
     ],
     'name': 'calcSellAmount',
     'outputs': [{ 'name': 'outcomeTokenSellAmount', 'type': 'uint256' }],
@@ -111,9 +152,27 @@ export const FPMM_ABI = [
   },
   {
     'constant': true,
+    'inputs': [],
+    'name': 'treasury',
+    'outputs': [{ 'name': '', 'type': 'address' }],
+    'payable': false,
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
+    'constant': true,
     'inputs': [{ 'name': 'account', 'type': 'address' }],
     'name': 'balanceOf',
     'outputs': [{ 'name': '', 'type': 'uint256' }],
+    'payable': false,
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
+    'constant': true,
+    'inputs': [],
+    'name': 'oracle',
+    'outputs': [{ 'name': '', 'type': 'address' }],
     'payable': false,
     'stateMutability': 'view',
     'type': 'function'
@@ -261,18 +320,6 @@ export const FPMM_ABI = [
     'outputs': [{ 'name': '', 'type': 'bytes4' }],
     'payable': false,
     'stateMutability': 'nonpayable',
-    'type': 'function'
-  },
-  {
-    'constant': true,
-    'inputs': [
-      { 'name': 'investmentAmount', 'type': 'uint256' },
-      { 'name': 'outcomeIndex', 'type': 'uint256' }
-    ],
-    'name': 'calcBuyAmount',
-    'outputs': [{ 'name': '', 'type': 'uint256' }],
-    'payable': false,
-    'stateMutability': 'view',
     'type': 'function'
   },
   {
