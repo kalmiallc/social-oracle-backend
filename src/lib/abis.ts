@@ -357,23 +357,26 @@ export const FPMM_FACTORY_ABI = [
   },
   {
     'constant': false,
-    'inputs': [
-      { 'name': 'conditionalTokens', 'type': 'address' },
-      { 'name': 'collateralToken', 'type': 'address' },
-      { 'name': 'conditionIds', 'type': 'bytes32[]' },
-      { 'name': 'fee', 'type': 'uint256' }
-    ],
-    'name': 'createFixedProductMarketMaker',
-    'outputs': [{ 'name': '', 'type': 'address' }],
+    'inputs': [{ 'name': 'consData', 'type': 'bytes' }],
+    'name': 'cloneConstructor',
+    'outputs': [],
     'payable': false,
     'stateMutability': 'nonpayable',
     'type': 'function'
   },
   {
     'constant': false,
-    'inputs': [{ 'name': 'consData', 'type': 'bytes' }],
-    'name': 'cloneConstructor',
-    'outputs': [],
+    'inputs': [
+      { 'name': 'conditionalTokens', 'type': 'address' },
+      { 'name': 'collateralToken', 'type': 'address' },
+      { 'name': 'conditionIds', 'type': 'bytes32[]' },
+      { 'name': 'fee', 'type': 'uint256' },
+      { 'name': 'treasuryPercent', 'type': 'uint256' },
+      { 'name': 'treasury', 'type': 'address' },
+      { 'name': 'oracle', 'type': 'address' }
+    ],
+    'name': 'createFixedProductMarketMaker',
+    'outputs': [{ 'name': '', 'type': 'address' }],
     'payable': false,
     'stateMutability': 'nonpayable',
     'type': 'function'
@@ -387,7 +390,10 @@ export const FPMM_FACTORY_ABI = [
       { 'indexed': true, 'name': 'conditionalTokens', 'type': 'address' },
       { 'indexed': true, 'name': 'collateralToken', 'type': 'address' },
       { 'indexed': false, 'name': 'conditionIds', 'type': 'bytes32[]' },
-      { 'indexed': false, 'name': 'fee', 'type': 'uint256' }
+      { 'indexed': false, 'name': 'fee', 'type': 'uint256' },
+      { 'indexed': false, 'name': 'treasuryPercent', 'type': 'uint256' },
+      { 'indexed': false, 'name': 'treasury', 'type': 'address' },
+      { 'indexed': false, 'name': 'oracle', 'type': 'address' }
     ],
     'name': 'FixedProductMarketMakerCreation',
     'type': 'event'
@@ -830,6 +836,15 @@ export const ORACLE_ABI = [
   {
     'anonymous': false,
     'inputs': [
+      { 'indexed': true, 'internalType': 'address', 'name': 'user', 'type': 'address' },
+      { 'indexed': false, 'internalType': 'uint256', 'name': 'fee', 'type': 'uint256' }
+    ],
+    'name': 'UserFeeSet',
+    'type': 'event'
+  },
+  {
+    'anonymous': false,
+    'inputs': [
       { 'indexed': true, 'internalType': 'address', 'name': 'voter', 'type': 'address' },
       { 'indexed': true, 'internalType': 'bytes32', 'name': 'questionId', 'type': 'bytes32' },
       { 'indexed': false, 'internalType': 'uint256', 'name': 'outcomeIdx', 'type': 'uint256' }
@@ -1021,9 +1036,26 @@ export const ORACLE_ABI = [
     'type': 'function'
   },
   {
+    'inputs': [
+      { 'internalType': 'address[]', 'name': 'users', 'type': 'address[]' },
+      { 'internalType': 'uint256[]', 'name': 'fees', 'type': 'uint256[]' }
+    ],
+    'name': 'setUserFee',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+  },
+  {
     'inputs': [{ 'internalType': 'bytes4', 'name': 'interfaceId', 'type': 'bytes4' }],
     'name': 'supportsInterface',
     'outputs': [{ 'internalType': 'bool', 'name': '', 'type': 'bool' }],
+    'stateMutability': 'view',
+    'type': 'function'
+  },
+  {
+    'inputs': [{ 'internalType': 'address', 'name': '', 'type': 'address' }],
+    'name': 'userFee',
+    'outputs': [{ 'internalType': 'uint256', 'name': '', 'type': 'uint256' }],
     'stateMutability': 'view',
     'type': 'function'
   },

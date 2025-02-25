@@ -108,7 +108,10 @@ export async function addPredictionSet(predictionSet: PredictionSet, context: Co
       env.CONDITIONAL_TOKEN_CONTRACT,
       env.COLLATERAL_TOKEN_CONTRACT,
       [conditionId],
-      100 // TODO: Change fee.
+      ethers.parseEther(env.ORACLE_FEE_FACTOR),
+      env.ORACLE_TREASURY_PERCENT,
+      env.TREASURY_ADDRESS,
+      env.ORACLE_CONTRACT
     );
     const txReceipt = await createTx.wait();
     receiptBlock = txReceipt.blockNumber;
