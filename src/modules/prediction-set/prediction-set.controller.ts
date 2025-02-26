@@ -12,6 +12,7 @@ import { PredictionSet } from './models/prediction-set.model';
 import { PredictionSetService } from './prediction-set.service';
 import { BaseQueryFilter } from '../../lib/base-models/base-query-filter.model';
 import { PredictionSetQueryFilter } from './dtos/prediction-set-query-filter';
+import { PredictionSetChanceHistoryQueryFilter } from './dtos/prediciton-set-chance-history-query-filter';
 
 @Controller('prediction-sets')
 export class PredictionSetController {
@@ -38,6 +39,17 @@ export class PredictionSetController {
   @Get('/:id')
   async getPredictionById(@Param('id', ParseIntPipe) id: number, @Ctx() context: Context) {
     return await this.predictionSetService.getPredictionById(id, context);
+  }
+
+  @Get('/:id/chance-history')
+  @Validation({ dto: PredictionSetChanceHistoryQueryFilter, validateFor: ValidateFor.QUERY })
+  @UseGuards(ValidationGuard)
+  async getPredictionChanceHistory(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: PredictionSetChanceHistoryQueryFilter,
+    @Ctx() context: Context
+  ) {
+    return await this.predictionSetService.getPredictionChanceHistory(id, query, context);
   }
 
   @Put('/:id')

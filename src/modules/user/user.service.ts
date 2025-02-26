@@ -115,7 +115,7 @@ export class UserService {
     if (githubUser.exists() && githubUser.id === user.id) {
       throw new CodeException({
         status: HttpStatus.UNPROCESSABLE_ENTITY,
-        code: ValidatorErrorCode.GITHUB_ALREADY_LINKEND_TO_AN_ACCOUNT,
+        code: ValidatorErrorCode.GITHUB_ALREADY_LINKED_TO_AN_ACCOUNT,
         errorCodes: ValidatorErrorCode,
         errorMessage: `GitHub already linked to another account.`,
         sourceFunction: `${this.constructor.name}/linkGithub`,

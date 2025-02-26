@@ -12,6 +12,9 @@ import { DataSource } from './data-source.model';
 import { Outcome } from './outcome.model';
 import { PredictionSetChainData } from './prediction-set-chain-data.model';
 import { PredictionSetQueryFilter } from '../dtos/prediction-set-query-filter';
+import { PredictionSetChanceHistoryQueryFilter } from '../dtos/prediciton-set-chance-history-query-filter';
+import { dateToSqlString } from '../../../lib/utils';
+import { groupBy } from 'lodash';
 
 /**
  * Prediction set resolution type.
@@ -342,11 +345,11 @@ export class PredictionSet extends AdvancedSQLModel {
     const context = this.getContext();
     const model = await super.populateById(id, conn, forUpdate);
 
-    if (populate.outcomes) {
+    if (populate?.outcomes) {
       this.outcomes = await this.getOutcomes(conn);
     }
 
-    if (populate.chainData) {
+    if (populate?.chainData) {
       this.chainData = await this.getPredictionSetChainData(conn, forUpdate);
     }
 
@@ -570,5 +573,48 @@ export class PredictionSet extends AdvancedSQLModel {
       res.items = res?.items?.map((x: any) => ({ ...x, outcomes: JSON.parse(x.outcomes) }));
     }
     return res;
+  }
+
+  public async getChanceHistory(query: PredictionSetChanceHistoryQueryFilter): Promise<any> {
+    let rangeCondition = '';
+    let endTime = dateToSqlString(new Date());
+    if (this.endTime.getTime() < new Date().getTime()) {
+      endTime = dateToSqlString(this.endTime);
+    }
+    switch (query.range) {
+      case '1D':
+        rangeCondition = `AND createTime >= DATE_SUB('${endTime}', INTERVAL 1 DAY)`;
+        break;
+      case '1W':
+        rangeCondition = `AND createTime >= DATE_SUB('${endTime}', INTERVAL 1 WEEK)`;
+        break;
+      case '1M':
+        rangeCondition = `AND createTime >= DATE_SUB('${endTime}', INTERVAL 1 MONTH)`;
+        break;
+      case 'ALL':
+      default:
+        rangeCondition = '';
+        break;
+    }
+
+    const outcomeChances = await this.db().paramExecute(
+      `
+        SELECT
+          outcome_id,
+          AVG(chance) as chance,
+          FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(createTime)/900)*900) as date
+        FROM ${DbTables.OUTCOME_CHANCE} 
+        WHERE prediction_set_id = @predictionSetId
+        ${rangeCondition}
+        GROUP BY date, outcome_id
+        ORDER BY date ASC
+      `,
+      {
+        predictionSetId: this.id,
+        startTime: this.startTime,
+        endTime: this.endTime
+      }
+    );
+    return groupBy(outcomeChances, 'outcome_id');
   }
 }
