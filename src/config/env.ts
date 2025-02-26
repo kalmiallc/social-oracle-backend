@@ -83,6 +83,8 @@ export interface IEnv {
 
   ORACLE_FEE_FACTOR: string;
   ORACLE_TREASURY_PERCENT: number;
+
+  GITHUB_AUTH: string;
 }
 
 dotenv.config();
@@ -181,7 +183,9 @@ export let env: IEnv = {
   ORACLE_BLOCK_CONFIRMATIONS: parseInt(process.env['ORACLE_BLOCK_CONFIRMATIONS']) || 5,
 
   ORACLE_FEE_FACTOR: process.env['ORACLE_FEE_FACTOR'] || '0.003', // Oracle fee factor in ETH (18 decimals) - 0.003 -> 0.3%
-  ORACLE_TREASURY_PERCENT: parseInt(process.env['ORACLE_TREASURY_PERCENT']) || 100 // 100 -> 1% (6 decimals)
+  ORACLE_TREASURY_PERCENT: parseInt(process.env['ORACLE_TREASURY_PERCENT']) || 100, // 100 -> 1% (6 decimals)
+
+  GITHUB_AUTH: process.env['GITHUB_AUTH']
 };
 
 /**
