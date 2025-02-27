@@ -130,9 +130,11 @@ export class UserService {
     user.githubFollowers = stats.followers;
     user.githubContributions = stats.contributions;
 
-    const fee = FeeContributionsTiers[user.githubTier || 0]?.fee;
+    if (user.githubTier > 0) {
+      const fee = FeeContributionsTiers[user.githubTier || 0]?.fee;
 
-    await setUserFee(user.walletAddress, fee);
+      await setUserFee(user.walletAddress, fee);
+    }
 
     try {
       await user.validate();
