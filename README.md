@@ -79,9 +79,10 @@ To set the inital DB conditions:
 
 ```
 npm run db-upgrade
+npm run db-seed
 ```
 
-Then start the node appliction.
+Then start the node application.
 
 ```
 npm run start
