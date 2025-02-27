@@ -137,7 +137,7 @@ export class User extends AdvancedSQLModel {
       return FeeContributionsTiers.reduce((acc, curr, curI) => (total >= curr.contribution ? curI : acc), 0);
     }
   })
-  public githubTier: string;
+  public githubTier: number;
 
   /**
    * User's authentication token.
