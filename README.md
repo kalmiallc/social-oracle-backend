@@ -2,6 +2,8 @@
 
 This repository contains source code for the Social Oracle application backend.
 
+Pre-deployed application FE can be found [here.](https://d1fq8e8mhf6u5t.cloudfront.net)
+
 **Social Oracle** is a decentralized prediction marketplace focused on social events and platform-based outcomes. It enables users to trade outcome shares (e.g., *Yes* or *No*) for events tied to platforms like LinkedIn, X (formerly Twitter), Twitch, LinkedIn, Youtube, IMDB, etc.  
 
 ## Social Oracle Repositories  
