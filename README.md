@@ -1,10 +1,25 @@
 # Social Oracle - Backend
 
-## Features:
+This repository contains source code for the Social Oracle application backend.
+
+**Social Oracle** is a decentralized prediction marketplace focused on social events and platform-based outcomes. It enables users to trade outcome shares (e.g., *Yes* or *No*) for events tied to platforms like LinkedIn, X (formerly Twitter), Twitch, LinkedIn, Youtube, IMDB, etc.  
+
+## Social Oracle Repositories  
+
+The complete application is divided into three repositories:  
+
+- **Frontend (FE):** [https://github.com/kalmiallc/social-oracle-app](https://github.com/kalmiallc/social-oracle-app)  
+- **Backend (BE):** [https://github.com/kalmiallc/social-oracle-backend](https://github.com/kalmiallc/social-oracle-backend)  
+- **Smart Contracts (SC):** [https://github.com/kalmiallc/social-oracle-contracts](https://github.com/kalmiallc/social-oracle-contracts)  
+
+A full description of the product, including functionality and usage, can be found in the repository of the **Frontend application**. 
+
+**Tehnical description** can be read [here](./TehnicalDescription.md)
+
+## Backend Features:
 * Create and manage new prediction markets
 * Workers to process the creation of new prediction markets on chain
 * Indexers to obtain relevant prediction market events - prediction market funding, outcome buy/sell transactions, outcome chance changes
-
 
 ## Technologies
 * Backend Framework: NestJS
@@ -54,6 +69,17 @@ GITHUB_AUTH=
 ```
 
 3. Run:
+
+Make shure the contracts are deployed. For the instructions refer to the Smart Contracts repositiory.
+Make sure that the MySQL is running and accessible. 
+
+To set the inital DB conditions:
+
+```
+npm run db-upgrade
+```
+
+Then start the node appliction.
 
 ```
 npm run start
