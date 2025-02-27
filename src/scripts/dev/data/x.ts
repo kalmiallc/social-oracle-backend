@@ -18,7 +18,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   },
   {
@@ -38,7 +38,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   },
   {
@@ -77,7 +77,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   },
   {
@@ -97,7 +97,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   },
   {
@@ -117,7 +117,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   },
   {
@@ -137,7 +137,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   },
   {
@@ -157,7 +157,7 @@ export const x = [
     predictionOutcomes: [
       { name: 'Yes', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/yes.svg' },
       { name: 'No', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/no.svg' },
-      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.pn' }
+      { name: 'Maybe', imgUrl: 'https://d1fq8e8mhf6u5t.cloudfront.net/images/maybe.png' }
     ]
   }
 ];
